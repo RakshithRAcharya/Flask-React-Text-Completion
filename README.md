@@ -6,7 +6,6 @@ This Project was build as a part of the TDL Course (UE18CS343)
 [![Maintenance](https://img.shields.io/badge/OS-Linux%2C%20Mac-red)](https://img.shields.io/badge/OS-Linux%2C%20Mac-red)
 [![made-with-python](https://img.shields.io/badge/made%20with-Python%2C%20JS-brightgreen)](https://img.shields.io/badge/made%20with-Python%2C%20JS-brightgreen)
 [![Documentation Status](https://img.shields.io/badge/Python-v3.6-blue)](https://img.shields.io/badge/Python-v3.6-blue)
-[![Documentation Status](https://readthedocs.org/projects/ansicolortags/badge/?version=latest)](http://ansicolortags.readthedocs.io/?badge=latest)
 
 ## Installation - 
 To install, just run the following commands in order.
