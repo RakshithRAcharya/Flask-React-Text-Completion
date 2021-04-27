@@ -19,9 +19,10 @@ def get_gen():
     else:
         text = data['text']
         model = data['model']
+        length = data['val']
         result = generate_text(
             model_type='gpt2',
-            length=20,
+            length=length,
             prompt=text,
             model_name_or_path=model
         )
