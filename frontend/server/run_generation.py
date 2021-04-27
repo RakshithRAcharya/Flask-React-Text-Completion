@@ -86,13 +86,13 @@ def sample_sequence(model, length, context, num_samples=1, temperature=1, top_k=
     return generated
 
 openai.api_key = os.getenv("OPENAI_API_KEY")
-def gpt3_gen(prompt, max_tokens=30):
+def gpt3_gen(prompt, max_tokens=30, temperature=0.3, top_p=0.97):
     response = openai.Completion.create(
       engine="davinci",
       prompt=f"I will be able to generate and complete sentences in the domain of Natural Language Processing or Computation and Linguistics, using different Arxiv papers. \n\nPrompt: Word Embeddings are\nAnswer: a class of techniques where individual words are represented as real-valued vectors in a predefined vector space. \n\nPrompt: Natural Language Processing is a domain where\nAnswer: artificial intelligence, and linguistics concerned with enabling computers to engage in communication using natural language(s) in all forms, including but not limited to speech, print, writing, and signing.\n\nPrompt: This model enables you to\nAnswer: learn word embeddings from a corpus of text.\n\nPrompt: The word embedding model is\nAnswer: a neural network that maps words to vectors of real numbers.\n\nPrompt: The word2vec model is\nAnswer: a neural network that maps words to vectors of real numbers.\n\nPrompt:{prompt}",
-      temperature=0.3,
-      max_tokens=30,
-      top_p=0.97,
+      temperature=temperature,
+      max_tokens=max_tokens,
+      top_p=top_p,
       frequency_penalty=0.13,
       presence_penalty=0,
     stop=["Prompt:"]
@@ -104,7 +104,7 @@ def generate_text(padding_text=None,
     length=20,
     prompt='',
     model_name_or_path='gpt2',
-    temperature=1.0,
+    temperature=0.9, # temperature here controls the randomness of the output
     top_k=0,
     top_p=0.9,
     no_cuda=True,
@@ -112,7 +112,7 @@ def generate_text(padding_text=None,
 
     if model_name_or_path == 'gpt3':
         raw_text = prompt if prompt else input("Model prompt >>> ")
-        text = gpt3_gen(raw_text, length)
+        text = gpt3_gen(raw_text, length, temperature, top_p)
         return text
 
     
@@ -142,10 +142,6 @@ def generate_text(padding_text=None,
 
     while True:
         raw_text = prompt if prompt else input("Model prompt >>> ")
-        if model_type in ["transfo-xl", "xlnet"]:
-            # Models with memory likes to have a long prompt for short inputs.
-            raw_text = (
-                padding_text if padding_text else PADDING_TEXT) + raw_text
         context_tokens = tokenizer.encode(raw_text)
         out = sample_sequence(
             model=model,
