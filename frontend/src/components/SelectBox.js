@@ -28,6 +28,7 @@ const SelectBox = ({ model, setModel }) => {
                 {/* <MenuItem value={'gpt2-medium'}>Medium (345M)</MenuItem>
                 <MenuItem value={'gpt2-large'}>Large (774M)</MenuItem> */}
                 <MenuItem value={'lysandre/arxiv-nlp'}>Fine-tuned NLP</MenuItem>
+                <MenuItem value={'gpt3'}>GPT 3</MenuItem>
             </Select>
         </FormControl>
     )
