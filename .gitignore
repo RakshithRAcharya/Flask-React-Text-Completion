@@ -130,3 +130,5 @@ dmypy.json
 
 # Node Stuff
 node_modules/
+tests/
+frontend/server/TDL-arxiv
