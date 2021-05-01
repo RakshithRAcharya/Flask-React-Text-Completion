@@ -84,7 +84,7 @@ def generate_text(padding_text=None,
     length=20,
     prompt='',
     model_name_or_path='gpt2',
-    temperature=1.0,
+    temperature=0.3,
     top_k=0,
     top_p=0.9,
     no_cuda=True,
@@ -116,10 +116,6 @@ def generate_text(padding_text=None,
 
     while True:
         raw_text = prompt if prompt else input("Model prompt >>> ")
-        if model_type in ["transfo-xl", "xlnet"]:
-            # Models with memory likes to have a long prompt for short inputs.
-            raw_text = (
-                padding_text if padding_text else PADDING_TEXT) + raw_text
         context_tokens = tokenizer.encode(raw_text)
         out = sample_sequence(
             model=model,

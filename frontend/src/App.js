@@ -56,11 +56,48 @@ function App() {
       label: "100",
     },
   ];
-  const [val, setVal] = useState(20);
-  const updateRange = (e, data) => {
-    setVal(data);};
+  // const tmp = [{
+  //   value: 0.0,
+  //   label: "0.0",
+  // },{
+  //   value: 0.1,
+  //   label: "0.10",
+  // },{
+  //   value: 0.2,
+  //   label: "0.20",
+  // },{
+  //   value: 0.3,
+  //   label: "0.30",
+  // },{
+  //   value: 0.4,
+  //   label: "0.40",
+  // },{
+  //   value: 0.50,
+  //   label: "0.50",
+  // },{
+  //   value: 0.60,
+  //   label: "0.60",
+  // },{
+  //   value: 0.70,
+  //   label: "0.70",
+  // },{
+  //   value: 0.80,
+  //   label: "0.80",
+  // },{
+  //   value: 0.90,
+  //   label: "0.90",
+  // },{
+  //   value: 1.00,
+  //   label: "1",
+  // },];
+  // const [tempval, settempVal] = useState(0.3);
+  // const updateTemp = (e, newtemp) => { 
+  //   settempVal(newtemp);};
+  const [lenval, setlenVal] = useState(20);
+  const updateLen = (e, data) => {
+    setlenVal(data);};
   const generateText = () => {
-    postGenerateText({ text, val, model, userId: 1 });
+    postGenerateText({ text, lenval, model, userId: 1 });
   }
 
   return (
@@ -69,8 +106,10 @@ function App() {
         <h1>Topics in Deep Learning Final Project - Team15</h1>
         <h2 class="subtitle">Context Sensitive Text Completion</h2>
         <SelectBox model={model} setModel={setModel} />
-        <InputLabel htmlFor="token-select">Length</InputLabel>
-        <Slider value={val} onChange={updateRange} marks={gfg}/>
+        <InputLabel htmlFor="token-select" >Length</InputLabel>
+        <Slider value={lenval} onChange={updateLen} marks={gfg} valueLabelDisplay="auto"/>
+        {/* <InputLabel htmlFor="temp-select">Temperature</InputLabel>
+        <Slider value={tempval} min={0} max={1} onChange={updateTemp} marks={tmp} valueLabelDisplay="auto"/> */}
         <TextBox text={text} setText={setText} />
         <Button onClick={generateText} />
       </form>

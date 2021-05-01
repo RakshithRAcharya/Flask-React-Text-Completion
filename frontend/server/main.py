@@ -19,7 +19,7 @@ def get_gen():
     else:
         text = data['text']
         model = data['model']
-        length = data['val']
+        length = data['lenval']
         result = generate_text(
             model_type='gpt2',
             length=length,
