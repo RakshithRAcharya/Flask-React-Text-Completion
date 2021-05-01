@@ -8,7 +8,13 @@ import torch
 import torch.nn.functional as F
 import numpy as np
 
+import os
+import openai
+
 from transformers import GPT2LMHeadModel, GPT2Tokenizer
+
+from dotenv import load_dotenv
+load_dotenv()
 
 logging.basicConfig(format='%(asctime)s - %(levelname)s - %(name)s -   %(message)s',
                     datefmt='%m/%d/%Y %H:%M:%S',
@@ -79,6 +85,20 @@ def sample_sequence(model, length, context, num_samples=1, temperature=1, top_k=
             generated = torch.cat((generated, next_token.unsqueeze(0)), dim=1)
     return generated
 
+openai.api_key = os.getenv("OPENAI_API_KEY")
+def gpt3_gen(prompt, max_tokens=30, temperature=0.3, top_p=0.97):
+    response = openai.Completion.create(
+      engine="davinci",
+      prompt=f"I will be able to generate and complete sentences in the domain of Natural Language Processing or Computation and Linguistics, using different Arxiv papers. \n\nPrompt: Word Embeddings are\nAnswer: a class of techniques where individual words are represented as real-valued vectors in a predefined vector space. \n\nPrompt: Natural Language Processing is a domain where\nAnswer: artificial intelligence, and linguistics concerned with enabling computers to engage in communication using natural language(s) in all forms, including but not limited to speech, print, writing, and signing.\n\nPrompt: This model enables you to\nAnswer: learn word embeddings from a corpus of text.\n\nPrompt: The word embedding model is\nAnswer: a neural network that maps words to vectors of real numbers.\n\nPrompt: The word2vec model is\nAnswer: a neural network that maps words to vectors of real numbers.\n\nPrompt:{prompt}",
+      temperature=temperature,
+      max_tokens=max_tokens,
+      top_p=top_p,
+      frequency_penalty=0.13,
+      presence_penalty=0,
+    stop=["Prompt:"]
+    )
+    return response["choices"][0]["text"][9:]
+
 def generate_text(padding_text=None,
     model_type='gpt2',
     length=20,
@@ -89,6 +109,7 @@ def generate_text(padding_text=None,
     top_p=0.9,
     no_cuda=True,
     seed=42,):
+
     
     device = torch.device(
         "cuda" if torch.cuda.is_available() and not no_cuda else "cpu")
